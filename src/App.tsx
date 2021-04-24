@@ -1,11 +1,16 @@
-import React, { Suspense } from "react";
-import logo from "./logo.svg";
+import React, { Suspense, useReducer } from "react";
 import "./App.css";
 import { BrowserRouter, Redirect, Switch } from "react-router-dom";
-import { ProtectedRouteWrapper ,PublicRouteWrapper} from "./components/routeWrappers";
+import {
+  ProtectedRouteWrapper,
+  PublicRouteWrapper,
+} from "./components/routeWrappers";
 import { protectedRoutes, publicRoutes } from "./config/router/routes";
+import { AuthProvider } from "./context/auth/auth.context";
+import { authReducer, initialAuthState } from "./context/auth/auth.reducer";
 
 const lazyPages: Record<string, React.ComponentType<unknown>> = {};
+
 Object.entries({ ...protectedRoutes, ...publicRoutes }).forEach(
   ([key, route]) => {
     lazyPages[key] = React.lazy(() => import(`src/pages/${route.page}`));
@@ -13,29 +18,37 @@ Object.entries({ ...protectedRoutes, ...publicRoutes }).forEach(
 );
 
 const App: React.FC = () => {
+  const [authState, dispatchAuthAction] = useReducer(
+    authReducer,
+    initialAuthState
+  );
+
   return (
-    <BrowserRouter>
-      <Suspense fallback={"loading..."}>
-        <Switch>
-          {Object.entries(protectedRoutes).map(([key, route]) => {
-            const C = lazyPages[key];
-            return (
-              <ProtectedRouteWrapper key={key} path={route.path}>
-                <C />
-              </ProtectedRouteWrapper>
-            );
-          })}
-          {Object.entries(publicRoutes).map(([key, route]) => {
-            const C = lazyPages[key];
-            return (
-              <PublicRouteWrapper key={key} path={route.path}>
-                <C />
-              </PublicRouteWrapper>
-            );
-          })}
-        </Switch>
-      </Suspense>
-    </BrowserRouter>
+    <AuthProvider value={[authState, dispatchAuthAction]}>
+      <BrowserRouter>
+        <Suspense fallback={"loading..."}>
+          <Switch>
+            {Object.entries(protectedRoutes).map(([key, route]) => {
+              const ComponentLazy = lazyPages[key];
+              return (
+                <ProtectedRouteWrapper key={key} path={route.path}>
+                  <ComponentLazy />
+                </ProtectedRouteWrapper>
+              );
+            })}
+            {Object.entries(publicRoutes).map(([key, route]) => {
+              const ComponentLazy = lazyPages[key];
+              return (
+                <PublicRouteWrapper key={key} path={route.path}>
+                  <ComponentLazy />
+                </PublicRouteWrapper>
+              );
+            })}
+            <Redirect to="/login" />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 

@@ -15,6 +15,6 @@ export const protectedRoutes = {
   users: {
     page: "users",
     exact: true,
-    path: "/list-of-users",
+    path: "/users",
   },
 };
