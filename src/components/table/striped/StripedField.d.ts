@@ -1,13 +1,13 @@
 export type IStripedField = {
-  data: any[];
+  data: IDataFields[];
 };
 
-type dataFields = {
+export interface IDataFields {
   className?: string | undefined;
   children: JSX.Element | string;
-};
+}
 
-export type IStripedTable = {
+export interface IStripedTable {
   labels: string[];
   dataFields: dataFields[][];
-};
+}

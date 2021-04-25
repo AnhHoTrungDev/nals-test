@@ -1,10 +1,10 @@
 import React from "react";
-import {IStripedField} from './StripedField.d';
+import {IDataFields, IStripedField} from './StripedField.d';
 
 const StripedField: React.FC<IStripedField> = ({ data }) => {
   return (
     <tr>
-      {data.map((item: any, idx: number) => {
+      {data.map((item: IDataFields, idx: number) => {
         const { className = "", children = "" } = item;
         return (
           <td key={idx} className={className}>

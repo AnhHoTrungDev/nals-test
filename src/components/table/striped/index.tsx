@@ -1,6 +1,6 @@
 import React from "react";
 import StripedField from "./StripedField";
-import { IStripedTable } from "./StripedField.d";
+import { IStripedTable, IDataFields } from "./StripedField.d";
 
 const Striped: React.FC<IStripedTable> = ({ labels, dataFields }) => {
   return (
@@ -13,7 +13,7 @@ const Striped: React.FC<IStripedTable> = ({ labels, dataFields }) => {
         </tr>
       </thead>
       <tbody>
-        {dataFields.map((dataField: any, idx: number) => (
+        {dataFields.map((dataField: IDataFields[], idx: number) => (
           <StripedField key={idx} data={dataField} />
         ))}
       </tbody>
