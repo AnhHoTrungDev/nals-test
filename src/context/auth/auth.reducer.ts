@@ -1,7 +1,7 @@
 import { AuthAction, IAuthState } from "./auth";
 
 const validateJWT = (): boolean => {
-  const regex = /^Bearer +[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
+  const regex = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
   return regex.test(localStorage.getItem("authentication") || "");
 };
 

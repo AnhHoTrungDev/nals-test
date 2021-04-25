@@ -1,12 +1,13 @@
-import { createContext, Context, Dispatch } from "react";
+import { createContext, Dispatch, Context } from "react";
 import { IAuthState, AuthAction } from "./auth";
 
 export interface IAuthContext {
-  authState?: IAuthState;
-  dispatchAuthAction?: Dispatch<AuthAction>;
+  authState: IAuthState;
+  dispatchAuthAction: Dispatch<AuthAction>;
 }
 
-const AuthContext: Context<any> = createContext({});
+const AuthContext = createContext<IAuthContext | null>(
+  null
+) as Context<IAuthContext>;
 
-export const AuthProvider = AuthContext.Provider;
 export default AuthContext;

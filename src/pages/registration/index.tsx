@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.svg";
 
 const Registration: React.FC = () => {
   return (
@@ -9,7 +11,7 @@ const Registration: React.FC = () => {
             <div className="col-lg-4 mx-auto">
               <div className="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div className="brand-logo">
-                  <img src="../../images/logo.svg" alt="logo" />
+                  <img src={logo} alt="logo" />
                 </div>
                 <h4>New here?</h4>
                 <h6 className="font-weight-light">
@@ -58,6 +60,7 @@ const Registration: React.FC = () => {
                       <label className="form-check-label text-muted">
                         <input type="checkbox" className="form-check-input" />I
                         agree to all Terms & Conditions
+                        <i className="input-helper"></i>
                       </label>
                     </div>
                   </div>
@@ -70,10 +73,10 @@ const Registration: React.FC = () => {
                     </a>
                   </div>
                   <div className="text-center mt-4 font-weight-light">
-                    Already have an account?{" "}
-                    <a href="login.html" className="text-primary">
+                    Already have an account? &nbsp;
+                    <Link to="auth/login" className="text-primary">
                       Login
-                    </a>
+                    </Link>
                   </div>
                 </form>
               </div>

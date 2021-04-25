@@ -4,9 +4,9 @@ import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import {
   ProtectedRouteWrapper,
   PublicRouteWrapper,
-} from "./components/routeWrappers";
+} from "./components/route-wrappers";
 import { protectedRoutes, publicRoutes } from "./config/router/routes";
-import { AuthProvider } from "./context/auth/auth.context";
+import AuthContext from "./context/auth/auth.context";
 import { authReducer, initialAuthState } from "./context/auth/auth.reducer";
 
 const lazyPages: Record<string, React.ComponentType<unknown>> = {};
@@ -24,9 +24,15 @@ const App: React.FC = () => {
   );
 
   return (
-    <AuthProvider value={[authState, dispatchAuthAction]}>
+    <AuthContext.Provider value={{ authState, dispatchAuthAction }}>
       <BrowserRouter>
-        <Suspense fallback={"loading..."}>
+        <Suspense
+          fallback={
+            <div className="spinner-grow" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          }
+        >
           <Switch>
             {Object.entries(protectedRoutes).map(([key, route]) => {
               const ComponentLazy = lazyPages[key];
@@ -44,11 +50,11 @@ const App: React.FC = () => {
                 </PublicRouteWrapper>
               );
             })}
-            <Redirect to="/login" />
+            <Redirect to={publicRoutes.login.path} />
           </Switch>
         </Suspense>
       </BrowserRouter>
-    </AuthProvider>
+    </AuthContext.Provider>
   );
 };
 
