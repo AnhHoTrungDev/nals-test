@@ -14,6 +14,7 @@ import axiosClient from "../../../config/call-api";
 import { Link, useHistory } from "react-router-dom";
 import { protectedRoutes } from "src/config/router/routes";
 import { ILoginInputs } from "./LoginForm.d";
+import { BASE_AUTHENTICATION } from "src/constant";
 
 const validationSchema = yup.object({
   username: yup
@@ -64,7 +65,7 @@ const LoginForm: React.FC = () => {
             } = response;
 
             if (token) {
-              localStorage.setItem("authentication", `${token}`);
+              localStorage.setItem(BASE_AUTHENTICATION, `${token}`);
               dispatchAuthAction({
                 type: "SWITCH_AUTH_STATE",
                 payload: { state: true },
@@ -117,6 +118,7 @@ const LoginForm: React.FC = () => {
         <button
           className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
           type="submit"
+          disabled={isLoading}
         >
           {!isLoading ? (
             "SIGN IN"

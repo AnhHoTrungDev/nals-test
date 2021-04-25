@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_AUTHENTICATION } from "src/constant";
 
 const axiosClient = axios.create({
   baseURL:
@@ -7,7 +8,7 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("authentication");
+  const token = localStorage.getItem(BASE_AUTHENTICATION);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -21,7 +22,7 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error?.response?.status === 401) {
-      localStorage.removeItem("authentication");
+      localStorage.removeItem(BASE_AUTHENTICATION);
       window.location = ("/auth/login" as unknown) as Location;
     }
     throw error;

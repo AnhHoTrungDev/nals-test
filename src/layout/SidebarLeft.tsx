@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { BASE_AUTHENTICATION } from "src/constant";
+import AuthContext from "src/context/auth/auth.context";
 
-const SidebarLeft:React.FC = () => {
+const SidebarLeft: React.FC = () => {
+  const { dispatchAuthAction } = useContext(AuthContext);
+  const logOutHandler = () => {
+    localStorage.removeItem(BASE_AUTHENTICATION);
+    dispatchAuthAction({
+      type: "SWITCH_AUTH_STATE",
+      payload: { state: false },
+    });
+  };
+
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <ul className="nav">
@@ -123,6 +135,12 @@ const SidebarLeft:React.FC = () => {
             <i className="ti-write menu-icon"></i>
             <span className="menu-title">Documentation</span>
           </a>
+        </li>
+        <li className="nav-item">
+          <Link onClick={logOutHandler} to="#" className="nav-link">
+            <i className="ti-write menu-icon"></i>
+            <span className="menu-title">Log Out</span>
+          </Link>
         </li>
       </ul>
     </nav>
