@@ -1,8 +1,5 @@
 import React from "react";
-
-type IStripedField = {
-  data: any[];
-};
+import {IStripedField} from './StripedField.d';
 
 const StripedField: React.FC<IStripedField> = ({ data }) => {
   return (

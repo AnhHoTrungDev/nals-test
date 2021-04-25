@@ -1,15 +1,6 @@
 import React from "react";
-import StripedField from "./stripedField";
-
-type dataFields = {
-  className?: string | undefined;
-  children: JSX.Element | string;
-};
-
-type IStripedTable = {
-  labels: string[];
-  dataFields: dataFields[][];
-};
+import StripedField from "./StripedField";
+import { IStripedTable } from "./StripedField.d";
 
 const Striped: React.FC<IStripedTable> = ({ labels, dataFields }) => {
   return (
