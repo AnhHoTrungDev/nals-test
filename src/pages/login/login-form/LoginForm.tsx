@@ -16,8 +16,14 @@ import { protectedRoutes } from "src/config/router/routes";
 import { ILoginInputs } from "./LoginForm.d";
 
 const validationSchema = yup.object({
-  username: yup.string().required("Required !"),
-  password: yup.string().required("Required !"),
+  username: yup
+    .string()
+    .required("Required !")
+    .trim("The contact name cannot include leading and trailing spaces"),
+  password: yup
+    .string()
+    .required("Required !")
+    .trim("The contact name cannot include leading and trailing spaces"),
 });
 
 const LoginForm: React.FC = () => {
@@ -25,10 +31,12 @@ const LoginForm: React.FC = () => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const {
+    setError,
+    reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginInputs>({ resolver });
+  } = useForm<ILoginInputs>({ resolver, mode: "onChange" });
   const { username, password } = errors || {};
   const { dispatchAuthAction } = useContext(AuthContext);
   const isUnmounted = useRef<boolean>(false);
@@ -67,10 +75,23 @@ const LoginForm: React.FC = () => {
           }
         })
         .catch(() => {
+          reset({});
           setIsLoading(false);
+          setError(
+            "username",
+            {
+              type: "unauthorized",
+              message: "Login failed !",
+            },
+            { shouldFocus: true }
+          );
+          setError("password", {
+            type: "unauthorized",
+            message: "",
+          });
         });
     },
-    [dispatchAuthAction, history]
+    [dispatchAuthAction, history, reset, setError]
   );
 
   return (
