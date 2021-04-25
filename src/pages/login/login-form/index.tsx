@@ -50,9 +50,7 @@ const LoginForm: React.FC = () => {
               type: "SWITCH_AUTH_STATE",
               payload: { state: true },
             });
-            setTimeout(() => {
-              history.push(protectedRoutes?.users?.path);
-            }, 300);
+            history.push(protectedRoutes?.users?.path);
           }
         }
       })
