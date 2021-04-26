@@ -102,6 +102,7 @@ const LoginForm: React.FC = () => {
           IsInvalid={!!username}
           placeholder="Username"
           fieldError={username}
+          data-testid="username-input"
           {...register("username")}
         />
       </div>
@@ -110,8 +111,9 @@ const LoginForm: React.FC = () => {
           type="password"
           IsInvalid={!!password}
           placeholder="Password"
-          {...register("password")}
           fieldError={password}
+          data-testid="password-input"
+          {...register("password")}
         />
       </div>
       <div className="mt-3">
@@ -119,6 +121,7 @@ const LoginForm: React.FC = () => {
           className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
           type="submit"
           disabled={isLoading}
+          data-testid="btn-sign-in"
         >
           {!isLoading ? (
             "SIGN IN"

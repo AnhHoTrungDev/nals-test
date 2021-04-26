@@ -24,6 +24,7 @@ const Registration: React.FC = () => {
                       className="form-control form-control-lg"
                       id="exampleInputUsername1"
                       placeholder="Username"
+                      data-testid="username-input"
                     />
                   </div>
                   <div className="form-group">
@@ -53,6 +54,7 @@ const Registration: React.FC = () => {
                       className="form-control form-control-lg"
                       id="exampleInputPassword1"
                       placeholder="Password"
+                      data-testid="password-input"
                     />
                   </div>
                   <div className="mb-4">
@@ -68,6 +70,7 @@ const Registration: React.FC = () => {
                     <a
                       className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
                       href="../../index.html"
+                      data-testid="btn-sign-up"
                     >
                       SIGN UP
                     </a>
